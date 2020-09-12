@@ -1,46 +1,49 @@
 pragma solidity ^0.5.11;
 
 contract Inferno {
-
     string public tokenName;
-    string public symbol;
-    uint public decimals;
-    uint public totalsupply;
+    string public symbols;
+    uint256 public decimals;
+    uint256 public totalsupply;
 
-    mapping (address => uint) internal balances;
-    event Transfer( address _receiver, uint _value);
+    mapping(address => uint256) internal balances;
+    event Transfer(address _receiver, uint256 _value);
 
     constructor() public {
         tokenName = "Inferno Smart Token";
-        symbol = "IST";
-        decimals = 18;
+        symbols = "IST";
+        decimal = 18;
         totalsupply = 10000000;
     }
 
-    function name() public view returns ( string memory) {
+    function name() external view returns (string memory) {
         return tokenName;
     }
 
-    function getsymbol() public view returns (string memory){
-        return symbol;
+    function symbol() external view returns (string memory) {
+        return symbols;
     }
 
-    function totalSupply() public view returns (uint ){
+    function decimals() external view returns ( string memory) {
+        return decimal;
+    }
+
+    function totalSupply() external view returns (uint256) {
         return totalsupply;
     }
 
-    function balanceOf(address _address) external view returns (uint) {
-         return balances[_address];   
+    function balanceOf(address _address) external view returns (uint256) {
+        return balances[_address];
     }
-
-    function transfer(address _receiver , uint _value) external {
-         uint _owner_balance = balances[msg.sender];
-         require(_owner_balance > 0 , "Insufficient Fund");
-         require(_owner_balance >= _value,"Insufficient Balance to run this transaction on ether Network" );
-         _owner_balance -= _value;
-         balances[_receiver] += _value;
-         emit Transfer( _receiver , _value);
+    function transfer(address _receiver, uint256 _value) external {
+        uint256 _owner_balance = balances[msg.sender];
+        require(_owner_balance > 0, "Insufficient Fund");
+        require(
+            _owner_balance >= _value,
+            "Insufficient Balance to run this transaction on ether Network"
+        );
+        _owner_balance -= _value;
+        balances[_receiver] += _value;
+        emit Transfer(_receiver, _value);
     }
-
-
 }
